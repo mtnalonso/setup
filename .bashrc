@@ -12,7 +12,6 @@ alias lt='exa --tree'
 alias lh='exa -bghHliS' # huge mode
 alias lla='exa --long --all'
 
-alias weather="curl http://wttr.in/~Santiago+De+Compostela"
+alias weather="curl http://wttr.in/"
 alias moon="curl wttr.in/Moon"
-alias twitter="rainbowstream"
 
