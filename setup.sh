@@ -5,6 +5,7 @@ function installer {
     sudo apt-get $@
 }
 
+
 # Basics
 function install_basics {
     installer update
@@ -18,7 +19,7 @@ function install_basics {
 # Security
 ## Antivirus
 function install_clamav {
-    # TODO: install clamav
+    exit 1
 }
 
 function install_hashcat {
@@ -52,6 +53,7 @@ function install_openvas {
 }
 
 function install_opensnitch {
+    exit 1
 }
 
 function install_drivers_alfa_awus1900 {
@@ -98,7 +100,7 @@ function install_metasploit {
 }
 
 function install_other {
-
+    exit 1
 }
 
-#install_basics
+install_basics
