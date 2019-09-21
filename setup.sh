@@ -10,10 +10,22 @@ function installer {
 function install_basics {
     installer update
     installer install -y \
-        gcc \
-        gdb \
         vim \
         htop
+}
+
+function install_dev_utils {
+    installer update
+    installer install -y \
+        gcc \
+        gdb \
+        python3 \
+        python3-pip \
+        vim
+}
+
+function configure_vim {
+    wget https://mtnalonso.com/vimrc -O .vimrc
 }
 
 # Security
@@ -104,6 +116,7 @@ function print_usage {
     echo -e "Usage:"
     echo -e "\t(no args)\tInstall basic utilities\n"
     echo -e "\t-a | --all\tInstall all utilities"
+    echo -e "\t-d | --dev\tInstall dev utilities"
     echo -e "\t-n | --network\tInstall network utilities only"
     echo -e "\t-h | --help\tPrint this menu and exit\n"
 }
@@ -114,6 +127,9 @@ if [ $# -gt 0 ]; then
         -a|--all)
             install_basics
             install_network_utils
+        ;;
+        -d|--dev)
+            install_dev_utils
         ;;
         -n|--network)
             install_network_utils
