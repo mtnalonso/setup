@@ -99,8 +99,29 @@ function install_metasploit {
     ./msfinstall
 }
 
-function install_other {
-    exit 1
+function print_usage {
+    echo -e "\nSystem setup script\n"
+    echo -e "Usage:"
+    echo -e "\t(no args)\tInstall basic utilities\n"
+    echo -e "\t-a | --all\tInstall all utilities"
+    echo -e "\t-n | --network\tInstall network utilities only"
+    echo -e "\t-h | --help\tPrint this menu and exit\n"
 }
 
-install_basics
+
+if [ $# -gt 0 ]; then
+    case $1 in
+        -a|--all)
+            install_basics
+            install_network_utils
+        ;;
+        -n|--network)
+            install_network_utils
+        ;;
+        -h|--help|*)
+            print_usage
+        ;;
+    esac
+else
+    install_basics
+fi
