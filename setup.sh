@@ -1,16 +1,14 @@
 #!/bin/bash
 
 
-if [ $(id -u) -ne 0 ]; then
-    echo "This script must be run as root"
-    exit 1
-fi
-
+function installer {
+    sudo apt-get $@
+}
 
 # Basics
 function install_basics {
-    apt-get update
-    apt-get install -y \
+    installer update
+    installer install -y \
         gcc \
         gdb \
         vim \
@@ -27,7 +25,7 @@ function install_hashcat {
     git clone https://github.com/hashcat/hashcat.git
     cd hashcat
     make
-    make install
+    sudo make install
     cd ..
     rm -rf hashcat
 
@@ -53,16 +51,19 @@ function install_openvas {
     openvas-setup
 }
 
+function install_opensnitch {
+}
+
 function install_drivers_alfa_awus1900 {
     # it has chipset RTL8814au
     # but this repo installs rtl8812au / rtl8814au
-    apt-get install bc
-    apt-get install linux-headers-`uname -r`
+    installer install bc
+    installer install linux-headers-`uname -r`
 
     git clone -b v5.1.5 https://github.com/aircrack-ng/rtl8812au.git
     cd rtl*/
     make RTL8814=1
-    make install RTL8814=1
+    sudo make install RTL8814=1
     make clean
 
     sudo modprobe -r 8814au
@@ -73,11 +74,11 @@ function install_hcx_tools {
     git clone https://github.com/ZerBea/hcxdumptool.git
     cd hcx*
     make
-    make install
+    sudo make install
     cd -
     rm -rf hcx*
 
-    sudo apt-get install -y \
+    installer install -y \
         libcurl4-openssl-dev \
         libssl-dev \
         libz-dev \
@@ -85,14 +86,14 @@ function install_hcx_tools {
     git clone https://github.com/ZerBea/hcxtools.git
     cd hcxtools/
     make
-    make install
+    sudo make install
     cd -
     rm -rf hcx
 }
 
 function install_metasploit {
     curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && \
-    chmod 755 msfinstall && \
+    sudo chmod 755 msfinstall && \
     ./msfinstall
 }
 
