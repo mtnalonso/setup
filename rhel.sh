@@ -43,3 +43,20 @@ function install_tig {
 }
 
 
+function install_facetimehd_drivers {
+    sudo dnf update
+    sudo dnf install -y kernel-devel
+
+    git clone https://github.com/patjak/bcwc_pcie.git
+    cd ./bcwc_pcie/firmware
+    # NOTE: Check for installed depedencies: curl, xzcat, cpio
+    make
+    sudo make install
+
+    depmod
+    modprobe facetimehd # load the module
+    lsmod | grep facetimehd # check if all relevant modules are loaded
+
+    echo "[+] Drivers installed, check if the camera works properly"
+}
+
