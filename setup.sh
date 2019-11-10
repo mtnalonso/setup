@@ -11,7 +11,8 @@ function install_basics {
     installer update
     installer install -y \
         vim \
-        htop
+        htop \
+        grc
 }
 
 function install_dev_utils {
