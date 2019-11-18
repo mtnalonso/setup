@@ -56,6 +56,12 @@ function install_network_utils {
     install_hcx_tools
 }
 
+function install_osint_utils {
+    git clone https://github.com/tomnomnom/assetfinder.git
+    cd ./assetfinder
+    go build
+}
+
 function install_vulnerabilities_utils {
     install_openvas
 }
