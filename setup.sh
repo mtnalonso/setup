@@ -56,10 +56,27 @@ function install_network_utils {
     install_hcx_tools
 }
 
+function install_assetfinder {
+    if [[ ! $(which assetfinder) ]]; then
+        git clone https://github.com/tomnomnom/assetfinder.git
+        cd ./assetfinder
+        go build
+        cd -
+    fi
+}
+
+function install_sublist3r {
+    if [[ ! $(which sublist3r) ]]; then
+        git clone https://github.com/aboul3la/Sublist3r.git /opt/sublist3r
+        cd /opt/sublist3r
+        sudo pip3 install -r requirements.txt
+        cd -
+    fi
+}
+
 function install_osint_utils {
-    git clone https://github.com/tomnomnom/assetfinder.git
-    cd ./assetfinder
-    go build
+    install_assetfinder
+    install_sublist3r
 }
 
 function install_vulnerabilities_utils {
