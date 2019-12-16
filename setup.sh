@@ -153,6 +153,7 @@ if [ $# -gt 0 ]; then
     case $1 in
         -a|--all)
             install_basics
+            install_dev_utils
             install_network_utils
         ;;
         -d|--dev)
