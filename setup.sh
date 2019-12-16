@@ -5,6 +5,9 @@ function installer {
     sudo apt-get $@
 }
 
+function configure_vim {
+    wget https://mtnalonso.com/vimrc -O .vimrc
+}
 
 # Basics
 function install_basics {
@@ -12,7 +15,11 @@ function install_basics {
     installer install -y \
         vim \
         htop \
+        git \
+        wget \
+        curl \
         grc
+    configure_vim
 }
 
 function install_dev_utils {
@@ -22,11 +29,7 @@ function install_dev_utils {
         gdb \
         python3 \
         python3-pip \
-        vim
-}
-
-function configure_vim {
-    wget https://mtnalonso.com/vimrc -O .vimrc
+        neofetch
 }
 
 # Security
