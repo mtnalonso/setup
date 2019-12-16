@@ -29,6 +29,7 @@ function install_dev_utils {
         gdb \
         python3 \
         python3-pip \
+        python3-ipython \
         neofetch
 }
 
