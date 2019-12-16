@@ -34,24 +34,29 @@ function install_dev_utils {
 
 # Security
 ## Antivirus
+function install_security_utils {
+
+}
 function install_clamav {
     exit 1
 }
 
 function install_hashcat {
-    git clone https://github.com/hashcat/hashcat.git
-    cd hashcat
-    make
-    sudo make install
-    cd ..
-    rm -rf hashcat
+    if [[ ! $(which hashcat) ]]; then
+        git clone https://github.com/hashcat/hashcat.git
+        cd hashcat
+        make
+        sudo make install
+        cd ..
+        rm -rf hashcat
 
-    git clone https://github.com/hashcat/hashcat-utils.git
-    cd hashcat-utils/src
-    make
-    cd -
-    mv hashcat-utils/src /opt/hashcat-utils
-    rm -rf hashcat-utils
+        git clone https://github.com/hashcat/hashcat-utils.git
+        cd hashcat-utils/src
+        make
+        cd -
+        mv hashcat-utils/src /opt/hashcat-utils
+        rm -rf hashcat-utils
+    fi
 }
 
 function install_network_utils {
@@ -133,9 +138,11 @@ function install_hcx_tools {
 }
 
 function install_metasploit {
-    curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && \
-    sudo chmod 755 msfinstall && \
-    ./msfinstall
+    if [[ ! $(which msfconsole) ]]; then
+        curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && \
+        sudo chmod 755 msfinstall && \
+        ./msfinstall
+    fi
 }
 
 function print_usage {
@@ -145,6 +152,7 @@ function print_usage {
     echo -e "\t-a | --all\tInstall all utilities"
     echo -e "\t-d | --dev\tInstall dev utilities"
     echo -e "\t-n | --network\tInstall network utilities only"
+    echo -e "\t-s | --security\tInstall security utilities only"
     echo -e "\t-h | --help\tPrint this menu and exit\n"
 }
 
@@ -155,12 +163,16 @@ if [ $# -gt 0 ]; then
             install_basics
             install_dev_utils
             install_network_utils
+            install_security_utils
         ;;
         -d|--dev)
             install_dev_utils
         ;;
         -n|--network)
             install_network_utils
+        ;;
+        -s|--security)
+            install_security_utils
         ;;
         -h|--help|*)
             print_usage
