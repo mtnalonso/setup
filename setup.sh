@@ -35,8 +35,9 @@ function install_dev_utils {
 # Security
 ## Antivirus
 function install_security_utils {
-
+    install_metasploit
 }
+
 function install_clamav {
     exit 1
 }
@@ -62,7 +63,7 @@ function install_hashcat {
 function install_network_utils {
     install_drivers_alfa_awus1900
     install_hcx_tools
-    installer install -y openvpn   
+    installer install -y openvpn nmap
 }
 
 function install_assetfinder {
