@@ -62,6 +62,7 @@ function install_hashcat {
 function install_network_utils {
     install_drivers_alfa_awus1900
     install_hcx_tools
+    installer install -y openvpn   
 }
 
 function install_assetfinder {
@@ -107,13 +108,15 @@ function install_drivers_alfa_awus1900 {
     installer install linux-headers-`uname -r`
 
     git clone -b v5.1.5 https://github.com/aircrack-ng/rtl8812au.git
-    cd rtl*/
+    cd rtl8812au/
     make RTL8814=1
     sudo make install RTL8814=1
     make clean
 
     sudo modprobe -r 8814au
     sudo modprobe 8814au rtw_led_ctrl=1
+    cd -
+    rm -rf  rtl8812au
 }
 
 function install_hcx_tools {
@@ -142,6 +145,7 @@ function install_metasploit {
         curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && \
         sudo chmod 755 msfinstall && \
         ./msfinstall
+        rm msfinstall
     fi
 }
 
