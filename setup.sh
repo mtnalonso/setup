@@ -149,7 +149,9 @@ function install_metasploit {
         ./msfinstall
         rm msfinstall
     fi
-    sudo systemctl start postgresql && sudo msfdb init
+    sudo systemctl enable postgresql
+    sudo systemctl start postgresql
+    sudo msfdb init
 }
 
 function print_usage {
