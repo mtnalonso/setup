@@ -85,9 +85,17 @@ function install_sublist3r {
     fi
 }
 
+function install_sherlock {
+    git clone https://github.com/sherlock-project/sherlock.git /opt/sherlock
+    cd /opt/sherlock
+    sudo pip3 install -r requirements.txt
+    cd -
+}
+
 function install_osint_utils {
     install_assetfinder
     install_sublist3r
+    install_sherlock
 }
 
 function install_vulnerabilities_utils {
