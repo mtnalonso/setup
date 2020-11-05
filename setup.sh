@@ -18,6 +18,7 @@ function install_basics {
         git \
         wget \
         curl \
+        acl \
         grc
     configure_vim
 }
@@ -37,6 +38,7 @@ function install_dev_utils {
 ## Antivirus
 function install_security_utils {
     install_metasploit
+    installer gobuster
 }
 
 function install_clamav {
@@ -64,8 +66,50 @@ function install_hashcat {
 function install_network_utils {
     install_drivers_alfa_awus1900
     install_hcx_tools
-    installer install -y openvpn nmap
+    installer install -y \
+        openvpn \
+        network-manager-openvpn \
+        network-manager-openvpn-gnome \
+        build-essential \
+        libpcap-dev \
+        libusb-1.0-0-dev \
+        libnetfilter-queue-dev \
+        nmap \
+        tshark \
+        wifite
+
+    install_bettercap
 }
+
+function install_go {
+    if [[ ! $(which go) ]]; then
+    wget https://golang.org/dl/go1.15.3.linux-armv6l.tar.gz
+    sudo tar -C /usr/local -xzf go1.15.3.linux-armv6l.tar.gz
+
+    sudo setfacl -R -m u:$USER:rX /usr/local/go
+    sudo setfacl -R -m u:$USER:rwX /usr/local/go/src
+    sudo setfacl -d -R -m u:$USER:rwX /usr/local/go/src
+
+    sudo mkdir /opt/go
+    sudo setfacl -R -m u:$USER:rwX /opt/go
+    sudo setfacl -d -R -m u:$USER:rwX /opt/go
+
+    sudo tee -a /etc/profile <<EOF
+export GOPATH=/opt/go
+export PATH=$PATH:/usr/local/go/bin
+EOF
+    fi
+}
+
+function install_bettercap {
+    go get github.com/bettercap/bettercap
+    cd $GOPATH/src/github.com/bettercap/bettercap
+    make build
+    sudo make install
+    cd -
+    sudo bettercap -eval "caplets.update; ui.update; q"
+}
+
 
 function install_assetfinder {
     if [[ ! $(which assetfinder) ]]; then
@@ -103,7 +147,7 @@ function install_vulnerabilities_utils {
 }
 
 function install_openvas {
-    apt-get install openvas
+    installer install openvas
     openvas-setup
 }
 
