@@ -57,6 +57,8 @@ export PS1="\e[0;36m\u\e[m\e[0;35m@\e[m\e[0;33m\h\e[m\e[0;35m:\e[m\w\\e[0;35m$\e
 #export PS1="\e[1;36m\u\e[m\e[1;35m@\e[m\e[1;33m\h\e[m\e[1;35m:\e[m\e[1m\w\\e[m\e[1;35m$\e[m "
 
 [[ -s "/etc/grc.bashrc" ]] && source /etc/grc.bashrc
+
+alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 EOF
 
 if [ ! -s "/etc/grc.bashrc" ]; then
@@ -79,9 +81,14 @@ sudo chown $USERNAME:$USERNAME /home/$USERNAME/.bash_profile
 sudo apt install -y \
     man \
     htop \
+    git \
+    traceroute \
+    dnsutils \
+    curl \
     neofetch
 
 
 # Recon =======================================================================
 sudo apt install -y \
+    nmap \
     amass
